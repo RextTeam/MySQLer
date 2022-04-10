@@ -21,3 +21,10 @@ class TableManager:
         values = [kwargs[name] for name in kwargs]
         valuetext = ', '.join('%s' for i in values)
         return f"INSERT INTO {self.tablename}({colums}) VALUES({valuetext})", values
+
+    def select(self, **kwargs):
+        if kwargs == {}:
+            return f"SELECT * FROM {self.tablename}"
+        else:
+            text = " AND ".join(f"{name}=%s" for name in kwargs)
+            return f"SELECT * FROM {self.tablename} WHERE {text}"
