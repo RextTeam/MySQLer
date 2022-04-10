@@ -27,4 +27,5 @@ class TableManager:
             return f"SELECT * FROM {self.tablename}"
         else:
             text = " AND ".join(f"{name}=%s" for name in kwargs)
-            return f"SELECT * FROM {self.tablename} WHERE {text}"
+            data = [kwargs[name] for name in kwargs]
+            return f"SELECT * FROM {self.tablename} WHERE {text}", data
