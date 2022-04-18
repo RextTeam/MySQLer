@@ -21,9 +21,10 @@ class TableError(Exception):
     pass
     
 class Table(metaclass=TableMeta):
+    @property
     def create(self):
         columns = ', '.join(f'{i} {self.columns[i]}' for i in self.columns)
-        return f"CREATE TABLE {self.tablename}({columns})"
+        return f"CREATE TABLE IF NOT EXIST {self.tablename}({columns})"
     
     def insert(self, **kwargs):
         for name in kwargs:
