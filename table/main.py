@@ -8,14 +8,14 @@ class IntColumn(ColumnType):
     name = "BIGINT"
     
 class TableMeta(type):
-    def __new__(cls, name, base, d, **kwargs):
-        d["tablename"] = kwargs.pop("table_name", name)
+    def __new__(cls, name, base, dct, **kwargs):
+        dct["tablename"] = kwargs.pop("table_name", name)
         columns = {}
-        for name, type_ in d.items:
+        for name, type_ in dct.items:
             if isinstance(type_, ColumnType):
                 columns[name] = type_.name
-        d["columns"] = columns
-        return super().__new__(cls, name, base, d)
+        dct["columns"] = columns
+        return super().__new__(cls, name, base, dct)
     
 class TableError(Exception):
     pass
