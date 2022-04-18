@@ -11,7 +11,7 @@ class TableMeta(type):
     def __new__(cls, name, base, dct, **kwargs):
         dct["tablename"] = kwargs.pop("table_name", name)
         columns = {}
-        for name, type_ in dct.items:
+        for name, type_ in dct.items():
             if isinstance(type_, ColumnType):
                 columns[name] = type_.name
         dct["columns"] = columns
