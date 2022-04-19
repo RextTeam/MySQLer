@@ -1,4 +1,4 @@
-from table import Table, StrColumn, IntColumn
+from mysqler import Table, StrColumn, IntColumn
 from aiomysql import connect
 import asyncio
 
