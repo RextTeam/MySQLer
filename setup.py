@@ -8,7 +8,7 @@ def _requires_from_file(filename):
 
 setuptools.setup(
     name="MySQLer",
-    version="0.0.1",
+    version="0.0.2",
     author="DMS",
     author_email="masato190411@gmail.com",
     description="table manager for aiomysql.",
