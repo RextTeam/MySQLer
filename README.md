@@ -1,21 +1,21 @@
 # MySQLer
+Easily generate SQL.
 
 ## Install
-
 ```bash
 pip install MySQLer
 ```
 
 ## Example
-
 ```python
-from mysqler import Table, StrColumn, IntColumn
-from aiomysql import connect
 import asyncio
 
+from mysqler import Table, ColumnType
+from aiomysql import connect
+
 class FavoritefoodTable(Table):
-    user = IntColumn()
-    food = StrColumn()
+    user = ColumnType.BIGINT
+    food = ColumnType.TEXT
     
 async def main():
     conn = await connect(host="127.0.0.1", password="", user="")
