@@ -1,9 +1,14 @@
+# MySQLer - Table
+
 from __future__ import annotations
 
 from typing import TypeVar
+
 from enum import Enum, auto
 
+
 __all__ = ("ColumnType", "Table", "TableError")
+
 
 class ColumnType(Enum):
     "Data type type."
@@ -33,6 +38,7 @@ class ColumnType(Enum):
     TEXT = auto
     ENUM = auto
     SET = auto
+
     
 class TableMeta(type):
     def __new__(cls, name, base, dct, **kwargs) -> TableMeta:
@@ -45,9 +51,11 @@ class TableMeta(type):
         dct["table_name"] = kwargs.pop("table_name", name)
         dct["columns"] = columns
         return super().__new__(cls, name, base, dct)
-    
+
+
 class TableError(Exception):
-    ...
+    "This is an error that can occur when working with tables."
+
 
 ValueT = TypeVar("ValueT")
 class Table(metaclass=TableMeta):
@@ -89,7 +97,10 @@ class Table(metaclass=TableMeta):
         """Execute `INSERT INTO`.
 
         Args:
-            **kwargs: This is specified in the `WHERE`."""
+            **kwargs: This is specified in the `WHERE`.
+
+        Raises:
+            TableError: If a column is not found"""
         self._exists(kwargs)
         return "INSERT INTO {} ({}) VALUES ({});".format(
             self.table_name, ", ".join(name for name in kwargs),
@@ -101,7 +112,10 @@ class Table(metaclass=TableMeta):
 
         Args:
             targets_: A string that is placed after `SELECT`.
-            **kwargs: This is specified in the `WHERE`."""
+            **kwargs: This is specified in the `WHERE`.
+
+        Raises:
+            TableError: If a column is not found"""
         if kwargs == {}:
             return (f"SELECT {targets_} FROM {self.table_name};", [])
         else:

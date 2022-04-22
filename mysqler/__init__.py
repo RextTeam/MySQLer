@@ -1,3 +1,5 @@
+# MySQLer
+
 from .table import *
 
 __all__ = ("ColumnType", "Table", "TableError")
