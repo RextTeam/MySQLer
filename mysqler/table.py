@@ -124,9 +124,9 @@ class Table(metaclass=TableMeta):
                 targets_, self.table_name, " AND ".join(f"{name}=%s" for name in kwargs)
             ), list(kwargs.values())
         
-    def delete(self, **kwargs):
+    def delete(self, **kwargs) -> tuple[str, list[ValueT]]:
         if kwargs == {}:
-            return (f"DELETE FROM {self.table_name}", [])
+            return (f"DELETE FROM {self.table_name};", [])
         else:
             self._exists(kwargs)
             return "DELETE FROM {} WHERE {};".format(
