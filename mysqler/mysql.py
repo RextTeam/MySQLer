@@ -2,7 +2,7 @@
 
 from typing import Union
 
-from aiomysql import Pool, Cursor
+from aiomysql import Pool, Cursor, Connection
 
 from .table import Table
 
