@@ -1,8 +1,12 @@
+# MySQLer - MySQL
+
+from aiomysql import Pool
+
 from .table import Table
-try:
-    from aiomysql import Pool
-except ImportError:
-    raise Exception("aiomysqlをインストールしてください")
+
+
+__all__ = ("TablePlus",)
+
 
 class TablePlus(Table):
     def __init__(self, pool: Pool):
