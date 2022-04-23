@@ -16,7 +16,7 @@ class TablePlus(Table):
     def __init__(self, pool_or_cursor: Union[Pool, Cursor]):
         self.pool_or_cursor = pool_or_cursor
         self.connection: Connection = None
-        self.cursor = None
+        self.cursor: Cursor = None
         self.wait_event = None
         
     async def __aenter__(self):
@@ -57,19 +57,17 @@ class TablePlus(Table):
         else:
             return await self.cursor.fetch_all(*args, **kwargs)
         
-    async def fetchone
+    async def fetchone(self, *args, **kwargs):
+        if self.cursor is None:
+            await self.wait_event.wait()
+        else:
+            return await self.cursor.fetch_all(*args, **kwargs)
     
     async def create(self):
-        async with self.pool.acquire() as conn:
-            async with conn.cursor() as cur:
-                await cur.execute(super().create)
+        await self.execute(super().create)
     
     async def insert(self, **kwargs):
-        async with self.pool.acquire() as conn:
-            async with conn.cursor() as cur:
-                await cur.execute(super().insert(**kwargs))
+        await self.execute(super().insert(**kwargs))
                 
     async def select(self, **kwargs):
-        async with self.pool.acquire() as conn:
-            async with conn.cursor() as cur:
-                await cur.execute(super().select(**kwargs))
+        await self.execute(super().select(**kwargs))
