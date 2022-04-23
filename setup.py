@@ -1,7 +1,7 @@
 import setuptools
 
 with open("README.md", "r") as fh:
-    long_description = fh.read()
+    long_description = fh.read() 
 
 with open(f"mysqler/__init__.py", "r") as f:
     text = f.read()
@@ -16,7 +16,7 @@ setuptools.setup(
     author="DMS",
     author_email="masato190411@gmail.com",
     maintainer="Rext",
-    description="table manager for aiomysql.",
+    description="mysql for human.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/RextTeam/MySQLer",
