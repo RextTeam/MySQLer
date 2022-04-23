@@ -152,9 +152,9 @@ class Table(metaclass=TableMeta):
                 targets_, self.table_name, &#34; AND &#34;.join(f&#34;{name}=%s&#34; for name in kwargs)
             ), list(kwargs.values())
         
-    def delete(self, **kwargs):
+    def delete(self, **kwargs) -&gt; tuple[str, list[ValueT]]:
         if kwargs == {}:
-            return (f&#34;DELETE FROM {self.table_name}&#34;, [])
+            return (f&#34;DELETE FROM {self.table_name};&#34;, [])
         else:
             self._exists(kwargs)
             return &#34;DELETE FROM {} WHERE {};&#34;.format(
@@ -382,9 +382,9 @@ table.select()
                 targets_, self.table_name, &#34; AND &#34;.join(f&#34;{name}=%s&#34; for name in kwargs)
             ), list(kwargs.values())
         
-    def delete(self, **kwargs):
+    def delete(self, **kwargs) -&gt; tuple[str, list[ValueT]]:
         if kwargs == {}:
-            return (f&#34;DELETE FROM {self.table_name}&#34;, [])
+            return (f&#34;DELETE FROM {self.table_name};&#34;, [])
         else:
             self._exists(kwargs)
             return &#34;DELETE FROM {} WHERE {};&#34;.format(
@@ -427,7 +427,7 @@ def create(self) -&gt; str:
 <h3>Methods</h3>
 <dl>
 <dt id="mysqler.table.Table.delete"><code class="name flex">
-<span>def <span class="ident">delete</span></span>(<span>self, **kwargs)</span>
+<span>def <span class="ident">delete</span></span>(<span>self, **kwargs) ‑> tuple[str, list[~ValueT]]</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -435,9 +435,9 @@ def create(self) -&gt; str:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def delete(self, **kwargs):
+<pre><code class="python">def delete(self, **kwargs) -&gt; tuple[str, list[ValueT]]:
     if kwargs == {}:
-        return (f&#34;DELETE FROM {self.table_name}&#34;, [])
+        return (f&#34;DELETE FROM {self.table_name};&#34;, [])
     else:
         self._exists(kwargs)
         return &#34;DELETE FROM {} WHERE {};&#34;.format(
