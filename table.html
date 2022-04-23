@@ -150,7 +150,17 @@ class Table(metaclass=TableMeta):
             self._exists(kwargs)
             return &#34;SELECT {} FROM {} WHERE {};&#34;.format(
                 targets_, self.table_name, &#34; AND &#34;.join(f&#34;{name}=%s&#34; for name in kwargs)
-            ), list(kwargs.values())</code></pre>
+            ), list(kwargs.values())
+        
+    def delete(self, **kwargs):
+        if kwargs == {}:
+            return (f&#34;DELETE FROM {self.table_name}&#34;, [])
+        else:
+            self._exists(kwargs)
+            return &#34;DELETE FROM {} WHERE {};&#34;.format(
+                self.table_name, &#34; AND &#34;.join(f&#34;{name}=%s&#34; for name in kwargs)
+            ), list(kwargs.values())
+            </code></pre>
 </details>
 </section>
 <section>
@@ -370,6 +380,15 @@ table.select()
             self._exists(kwargs)
             return &#34;SELECT {} FROM {} WHERE {};&#34;.format(
                 targets_, self.table_name, &#34; AND &#34;.join(f&#34;{name}=%s&#34; for name in kwargs)
+            ), list(kwargs.values())
+        
+    def delete(self, **kwargs):
+        if kwargs == {}:
+            return (f&#34;DELETE FROM {self.table_name}&#34;, [])
+        else:
+            self._exists(kwargs)
+            return &#34;DELETE FROM {} WHERE {};&#34;.format(
+                self.table_name, &#34; AND &#34;.join(f&#34;{name}=%s&#34; for name in kwargs)
             ), list(kwargs.values())</code></pre>
 </details>
 <h3>Subclasses</h3>
@@ -407,6 +426,25 @@ def create(self) -&gt; str:
 </dl>
 <h3>Methods</h3>
 <dl>
+<dt id="mysqler.table.Table.delete"><code class="name flex">
+<span>def <span class="ident">delete</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete(self, **kwargs):
+    if kwargs == {}:
+        return (f&#34;DELETE FROM {self.table_name}&#34;, [])
+    else:
+        self._exists(kwargs)
+        return &#34;DELETE FROM {} WHERE {};&#34;.format(
+            self.table_name, &#34; AND &#34;.join(f&#34;{name}=%s&#34; for name in kwargs)
+        ), list(kwargs.values())</code></pre>
+</details>
+</dd>
 <dt id="mysqler.table.Table.insert"><code class="name flex">
 <span>def <span class="ident">insert</span></span>(<span>self, **kwargs: ValueT) ‑> tuple[str, list[~ValueT]]</span>
 </code></dt>
@@ -543,9 +581,10 @@ def create(self) -&gt; str:
 </li>
 <li>
 <h4><code><a title="mysqler.table.Table" href="#mysqler.table.Table">Table</a></code></h4>
-<ul class="">
+<ul class="two-column">
 <li><code><a title="mysqler.table.Table.columns" href="#mysqler.table.Table.columns">columns</a></code></li>
 <li><code><a title="mysqler.table.Table.create" href="#mysqler.table.Table.create">create</a></code></li>
+<li><code><a title="mysqler.table.Table.delete" href="#mysqler.table.Table.delete">delete</a></code></li>
 <li><code><a title="mysqler.table.Table.insert" href="#mysqler.table.Table.insert">insert</a></code></li>
 <li><code><a title="mysqler.table.Table.select" href="#mysqler.table.Table.select">select</a></code></li>
 <li><code><a title="mysqler.table.Table.table_name" href="#mysqler.table.Table.table_name">table_name</a></code></li>
