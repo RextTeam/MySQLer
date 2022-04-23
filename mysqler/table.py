@@ -123,3 +123,13 @@ class Table(metaclass=TableMeta):
             return "SELECT {} FROM {} WHERE {};".format(
                 targets_, self.table_name, " AND ".join(f"{name}=%s" for name in kwargs)
             ), list(kwargs.values())
+        
+    def delete(self, **kwargs):
+        if kwargs == {}:
+            return (f"DELETE FROM {self.table_name}", [])
+        else:
+            self._exists(kwargs)
+            return "DELETE FROM {} WHERE {};".format(
+                self.table_name, " AND ".join(f"{name}=%s" for name in kwargs)
+            ), list(kwargs.values())
+            
