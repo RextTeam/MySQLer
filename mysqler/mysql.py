@@ -48,26 +48,23 @@ class TablePlus(Table):
     async def execute(self, *args, **kwargs):
         if self.cursor is None:
             await self.wait_event.wait()
-        else:
-            await self.cursor.execute(*args, **kwargs)
+        await self.cursor.execute(*args, **kwargs)
             
     async def fetchall(self, *args, **kwargs):
         if self.cursor is None:
             await self.wait_event.wait()
-        else:
-            return await self.cursor.fetch_all(*args, **kwargs)
+        return await self.cursor.fetch_all(*args, **kwargs)
         
     async def fetchone(self, *args, **kwargs):
         if self.cursor is None:
             await self.wait_event.wait()
-        else:
-            return await self.cursor.fetch_all(*args, **kwargs)
+        return await self.cursor.fetch_all(*args, **kwargs)
     
     async def create(self):
-        await self.execute(super().create)
+        await self.execute(*super().create)
     
     async def insert(self, **kwargs):
-        await self.execute(super().insert(**kwargs))
+        await self.execute(*super().insert(**kwargs))
                 
     async def select(self, **kwargs):
-        await self.execute(super().select(**kwargs))
+        await self.execute(*super().select(**kwargs))
